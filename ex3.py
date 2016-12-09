@@ -96,16 +96,19 @@ for i in range(5):
 
 B = [(0.125,0.125),(0.125,0.25),(0.125,0.375)] #the tuples have the form (a,b)
 A = [(0.4,0.25),(0.25,0.25)] # same with this one
-
+concat = B+A
 #first calculate estimatertts
 #to calculate the final retransmissions it is critical to first
 #find the EstimateRTT -- > Devrtt --> timeoutintervals -->retransmissions
 #retransmissions is a dictionary that starts from the number 19 in order to 
 #make every data structure compatible.
 retransmissions_dict = {}
+iterator = 0
 for i in listofsrtts:
-	for (a,b) in B:
+	for (a,b) in concat:
 		estimatetemp = EstimateRTT(i,a)
 		devtemp = Devrtt(i,estimatetemp,b)
 		timeout = timeoutintervals(estimatetemp,devtemp)
-		(retlist,retransmissions_dict[(a,b)]) = retransmissions(timeout,i)
+		(_,retransmissions_dict[(a,b,iterator)]) = retransmissions(timeout,i)
+		iterator+=1 #indicates the number of the samplertt set
+		
