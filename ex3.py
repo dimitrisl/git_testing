@@ -117,4 +117,4 @@ for i in listofsrtts:
 for j in range(iterator):
 	print "for the set %d "%j
 	for a,b in concat:
-		print "for ({0},{1}) we have {2} retransmissions".format(a,b,retransmissions_dict[(a,b,j)])
+		print "for a = {0} and b = {1} we have {2} retransmissions".format(a,b,retransmissions_dict[(a,b,j)])
