@@ -78,8 +78,21 @@ def timeoutintervals(estimatertt,devrtt):
 		lst.append(estimatertt[i]+4*devrtt[i])
 	return lst
 	
+def retransmissions(timeoutintervals,samplertt):
+	retransmissions = {}
+	counter = 0
+	for i in range(19,len(samplertt)):
+		if timeoutintervals[i-1] > samplertt[i]:
+			retransmissions[i] = 1 #succesfull
+		elif timeoutintervals[i-1] <= samplertt[i]:
+			retransmissions[i] = 0 #unsuccesfull
+			counter += 1 #counts the number of retransmissions
+	return retransmissions,counter 
+	
 listofsrtts=[] #calculate samplertts'
 for i in range(5):
 	temp = roundtriptimes()
 	listofsrtts.append(temp)
 
+B = [0.125,0.375]
+A = [0.4,0.25]
