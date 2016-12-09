@@ -94,5 +94,9 @@ for i in range(5):
 	temp = roundtriptimes()
 	listofsrtts.append(temp)
 
-B = [0.125,0.375]
-A = [0.4,0.25]
+B = [(0.125,0.125),(0.125,0.25),(0.125,0.375)] #the tuples have the form (a,b)
+A = [(0.4,0.25),(0.125,0.25),(0.25,0.25)] # same with this one
+
+#first calculate estimatertts
+for i in listofsrtts:
+	
