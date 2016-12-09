@@ -113,9 +113,8 @@ for i in listofsrtts:
 	
 	iterator+=1 #indicates the number of the samplertt set
 
-print iterator
 	
 for j in range(iterator):
 	print "for the set %d "%j
 	for a,b in concat:
-		print retransmissions_dict[(a,b,j)]
+		print "for (%f,%f) we have %d"%(a,b,retransmissions_dict[(a,b,j)])
