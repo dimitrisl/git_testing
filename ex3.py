@@ -103,13 +103,14 @@ concat = B+A
 #retransmissions is a dictionary that starts from the number 19 in order to 
 #make every data structure compatible.
 retransmissions_dict = {}
+retrcounter = {}
 iterator = 0 
 for i in listofsrtts:
 	for (a,b) in concat:
 		estimatetemp = EstimateRTT(i,a)
 		devtemp = Devrtt(i,estimatetemp,b)
 		timeout = timeoutintervals(estimatetemp,devtemp)
-		(_,retransmissions_dict[(a,b,iterator)]) = retransmissions(timeout,i)
+		(retransmissions_dict[(a,b,iterator)],retrcounter[(a,b,iterator)]) = retransmissions(timeout,i)
 	
 	iterator+=1 #indicates the number of the samplertt set
 
@@ -117,4 +118,4 @@ for i in listofsrtts:
 for j in range(iterator):
 	print "for the set %d "%j
 	for a,b in concat:
-		print "for a = {0} and b = {1} we have {2} retransmissions".format(a,b,retransmissions_dict[(a,b,j)])
+		print "for a = {0} and b = {1} we have {2} retransmissions".format(a,b,retrcounter[(a,b,j)])
