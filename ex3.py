@@ -104,13 +104,16 @@ concat = B+A
 #make every data structure compatible.
 retransmissions_dict = {}
 retrcounter = {}
+dev_dict = {}
+estimation_dict = {}
+timeout = {}
 iterator = 0 
 for i in listofsrtts:
 	for (a,b) in concat:
-		estimatetemp = EstimateRTT(i,a)
-		devtemp = Devrtt(i,estimatetemp,b)
-		timeout = timeoutintervals(estimatetemp,devtemp)
-		(retransmissions_dict[(a,b,iterator)],retrcounter[(a,b,iterator)]) = retransmissions(timeout,i)
+		estimation_dict[(a,b,iterator)] = EstimateRTT(i,a)
+		dev_dict[(a,b,iterator)] = Devrtt(i,estimation_dict[(a,b,iterator)],b)
+		timeout[(a,b,iterator)] = timeoutintervals(estimation_dict[(a,b,iterator)],dev_dict[(a,b,iterator)])
+		(retransmissions_dict[(a,b,iterator)],retrcounter[(a,b,iterator)]) = retransmissions(timeout[(a,b,iterator)],i)
 	
 	iterator+=1 #indicates the number of the samplertt set
 
@@ -119,3 +122,7 @@ for j in range(iterator):
 	print "for the set %d "%j
 	for a,b in concat:
 		print "for a = {0} and b = {1} we have {2} retransmissions".format(a,b,retrcounter[(a,b,j)])
+
+for a,b in concat:
+	for i in range(101,200):
+		print i,timeout[(a,b,0)][i-1],listofsrtts[0][i],retransmissions_dict[(a,b,0)][i]
