@@ -11,7 +11,6 @@ import random
 upper = 100
 down = 1
 tuxaios = random.randint(down,upper)
-
 while True:
     response = raw_input("Eiste panw apo %d xronwn? "%tuxaios)
     if response == "y":

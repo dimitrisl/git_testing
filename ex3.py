@@ -59,8 +59,8 @@ def roundtriptimes():
 def EstimateRTT(samplertt,a):
 	Estimatertt = []
 	Estimatertt.append(100)
-	for i in range(len(samplertt):
-		temp = (1-a)Estimatertt[i] + a*samplertt[i]
+	for i in range(len(samplertt)):
+		temp = (1-a)*Estimatertt[i] + a*samplertt[i]
 		Estimatertt.append(temp)
 	return Estimatertt
 
@@ -68,13 +68,13 @@ def Devrtt(samplertt,estimatertt,b):
 	devrtt = []
 	devrtt.append(100)
 	for i in range(len(samplertt)):
-		temp = (1-b)devrtt[i] + b*abs(samplertt[i]-estimatertt[i])
+		temp = (1-b)*devrtt[i] + b*abs(samplertt[i]-estimatertt[i])
 		devrtt.append(temp)
 	return devrtt
 
 def timeoutintervals(estimatertt,devrtt):
 	lst = []
-	for i in len(estimatertt):
+	for i in range(len(estimatertt)):
 		lst.append(estimatertt[i]+4*devrtt[i])
 	return lst
 	
@@ -95,8 +95,17 @@ for i in range(5):
 	listofsrtts.append(temp)
 
 B = [(0.125,0.125),(0.125,0.25),(0.125,0.375)] #the tuples have the form (a,b)
-A = [(0.4,0.25),(0.125,0.25),(0.25,0.25)] # same with this one
+A = [(0.4,0.25),(0.25,0.25)] # same with this one
 
 #first calculate estimatertts
+#to calculate the final retransmissions it is critical to first
+#find the EstimateRTT -- > Devrtt --> timeoutintervals -->retransmissions
+#retransmissions is a dictionary that starts from the number 19 in order to 
+#make every data structure compatible.
+retransmissions_dict = {}
 for i in listofsrtts:
-	
+	for (a,b) in B:
+		estimatetemp = EstimateRTT(i,a)
+		devtemp = Devrtt(i,estimatetemp,b)
+		timeout = timeoutintervals(estimatetemp,devtemp)
+		(retlist,retransmissions_dict[(a,b)]) = retransmissions(timeout,i)
