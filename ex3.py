@@ -129,6 +129,6 @@ f2 = open('set0_quadruples.txt','w')
 f2.write('n,timeoutinterval,samplertt,retransmission \n')
 for a,b in concat:
 	f2.write("\n a,b = ({0},{1}) \n".format(a,b))
-	for i in range(101,200):
-		print i,timeout[(a,b,0)][i-1],listofsrtts[0][i],retransmissions_dict[(a,b,0)][i]
-		f2.write("{0} , {1} , {2} , {3} \n".format(i,timeout[(a,b,0)][i-1],listofsrtts[0][i],retransmissions_dict[(a,b,0)][i]))
+	for i in range(100,200):
+		print i+1,timeout[(a,b,0)][i-1],listofsrtts[0][i],retransmissions_dict[(a,b,0)][i]
+		f2.write("{0} , {1} , {2} , {3} \n".format(i+1,timeout[(a,b,0)][i-1],listofsrtts[0][i],retransmissions_dict[(a,b,0)][i]))
