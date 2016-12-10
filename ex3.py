@@ -108,8 +108,9 @@ dev_dict = {}
 estimation_dict = {}
 timeout = {}
 iterator = 0 
+f1 = open('a,b_results_allsrt.txt','w')
 for i in listofsrtts:
-	for (a,b) in concat:
+	for a,b in concat:
 		estimation_dict[(a,b,iterator)] = EstimateRTT(i,a)
 		dev_dict[(a,b,iterator)] = Devrtt(i,estimation_dict[(a,b,iterator)],b)
 		timeout[(a,b,iterator)] = timeoutintervals(estimation_dict[(a,b,iterator)],dev_dict[(a,b,iterator)])
@@ -119,10 +120,15 @@ for i in listofsrtts:
 
 	
 for j in range(iterator):
-	print "for the set %d "%j
+	f1.write("for the set %d \n"%j)
 	for a,b in concat:
 		print "for a = {0} and b = {1} we have {2} retransmissions".format(a,b,retrcounter[(a,b,j)])
-
+		f1.write("for a = {0} and b = {1} we have {2} retransmissions \n".format(a,b,retrcounter[(a,b,j)]))
+f1.close()
+f2 = open('set0_quadruples.txt','w')
+f2.write('n,timeoutinterval,samplertt,retransmission \n')
 for a,b in concat:
+	f2.write("\n a,b = ({0},{1}) \n".format(a,b))
 	for i in range(101,200):
 		print i,timeout[(a,b,0)][i-1],listofsrtts[0][i],retransmissions_dict[(a,b,0)][i]
+		f2.write("{0} , {1} , {2} , {3} \n".format(i,timeout[(a,b,0)][i-1],listofsrtts[0][i],retransmissions_dict[(a,b,0)][i]))

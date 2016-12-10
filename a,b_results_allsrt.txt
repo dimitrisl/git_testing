@@ -1,0 +1,30 @@
+for the set 0 
+for a = 0.125 and b = 0.125 we have 0 retransmissions 
+for a = 0.125 and b = 0.25 we have 0 retransmissions 
+for a = 0.125 and b = 0.375 we have 0 retransmissions 
+for a = 0.4 and b = 0.25 we have 0 retransmissions 
+for a = 0.25 and b = 0.25 we have 0 retransmissions 
+for the set 1 
+for a = 0.125 and b = 0.125 we have 0 retransmissions 
+for a = 0.125 and b = 0.25 we have 0 retransmissions 
+for a = 0.125 and b = 0.375 we have 0 retransmissions 
+for a = 0.4 and b = 0.25 we have 4 retransmissions 
+for a = 0.25 and b = 0.25 we have 1 retransmissions 
+for the set 2 
+for a = 0.125 and b = 0.125 we have 0 retransmissions 
+for a = 0.125 and b = 0.25 we have 2 retransmissions 
+for a = 0.125 and b = 0.375 we have 3 retransmissions 
+for a = 0.4 and b = 0.25 we have 7 retransmissions 
+for a = 0.25 and b = 0.25 we have 5 retransmissions 
+for the set 3 
+for a = 0.125 and b = 0.125 we have 0 retransmissions 
+for a = 0.125 and b = 0.25 we have 0 retransmissions 
+for a = 0.125 and b = 0.375 we have 0 retransmissions 
+for a = 0.4 and b = 0.25 we have 4 retransmissions 
+for a = 0.25 and b = 0.25 we have 4 retransmissions 
+for the set 4 
+for a = 0.125 and b = 0.125 we have 0 retransmissions 
+for a = 0.125 and b = 0.25 we have 2 retransmissions 
+for a = 0.125 and b = 0.375 we have 3 retransmissions 
+for a = 0.4 and b = 0.25 we have 4 retransmissions 
+for a = 0.25 and b = 0.25 we have 4 retransmissions 
