@@ -1,30 +1,30 @@
 for the set 0 
-for a,b = (0.125,0.125) we have 0 retransmissions 
-for a,b = (0.125,0.25) we have 1 retransmissions 
-for a,b = (0.125,0.375) we have 1 retransmissions 
-for a,b = (0.4,0.25) we have 3 retransmissions 
-for a,b = (0.25,0.25) we have 3 retransmissions 
-for the set 1 
-for a,b = (0.125,0.125) we have 0 retransmissions 
-for a,b = (0.125,0.25) we have 0 retransmissions 
-for a,b = (0.125,0.375) we have 1 retransmissions 
-for a,b = (0.4,0.25) we have 1 retransmissions 
-for a,b = (0.25,0.25) we have 1 retransmissions 
-for the set 2 
-for a,b = (0.125,0.125) we have 0 retransmissions 
-for a,b = (0.125,0.25) we have 0 retransmissions 
-for a,b = (0.125,0.375) we have 0 retransmissions 
-for a,b = (0.4,0.25) we have 1 retransmissions 
-for a,b = (0.25,0.25) we have 1 retransmissions 
-for the set 3 
-for a,b = (0.125,0.125) we have 0 retransmissions 
-for a,b = (0.125,0.25) we have 0 retransmissions 
-for a,b = (0.125,0.375) we have 0 retransmissions 
-for a,b = (0.4,0.25) we have 1 retransmissions 
-for a,b = (0.25,0.25) we have 0 retransmissions 
-for the set 4 
-for a,b = (0.125,0.125) we have 0 retransmissions 
+for a,b = (0.125,0.125) we have 4 retransmissions 
 for a,b = (0.125,0.25) we have 2 retransmissions 
-for a,b = (0.125,0.375) we have 2 retransmissions 
+for a,b = (0.125,0.375) we have 4 retransmissions 
 for a,b = (0.4,0.25) we have 5 retransmissions 
 for a,b = (0.25,0.25) we have 3 retransmissions 
+for the set 1 
+for a,b = (0.125,0.125) we have 4 retransmissions 
+for a,b = (0.125,0.25) we have 5 retransmissions 
+for a,b = (0.125,0.375) we have 4 retransmissions 
+for a,b = (0.4,0.25) we have 7 retransmissions 
+for a,b = (0.25,0.25) we have 5 retransmissions 
+for the set 2 
+for a,b = (0.125,0.125) we have 2 retransmissions 
+for a,b = (0.125,0.25) we have 0 retransmissions 
+for a,b = (0.125,0.375) we have 3 retransmissions 
+for a,b = (0.4,0.25) we have 3 retransmissions 
+for a,b = (0.25,0.25) we have 3 retransmissions 
+for the set 3 
+for a,b = (0.125,0.125) we have 4 retransmissions 
+for a,b = (0.125,0.25) we have 6 retransmissions 
+for a,b = (0.125,0.375) we have 6 retransmissions 
+for a,b = (0.4,0.25) we have 10 retransmissions 
+for a,b = (0.25,0.25) we have 8 retransmissions 
+for the set 4 
+for a,b = (0.125,0.125) we have 3 retransmissions 
+for a,b = (0.125,0.25) we have 3 retransmissions 
+for a,b = (0.125,0.375) we have 4 retransmissions 
+for a,b = (0.4,0.25) we have 4 retransmissions 
+for a,b = (0.25,0.25) we have 4 retransmissions 

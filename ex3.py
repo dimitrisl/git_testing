@@ -11,25 +11,26 @@ def formalize(number):
 def normalestimation(samplertt,counter):
 	x = bell(0.7,1.3)
 	y = bell(-10,35)
-	estimate = formalize(x*samplertt[-1]*y)
+	estimate = formalize(x*samplertt[-1]+y)
 	samplertt.append(estimate)
 	counter += 1
 	return samplertt,counter
 
 def dostuff(samplertt,counter):
-	ring =select([0.25,0.5,0.75,1])
+	ring = select([0.25,0.5,0.75,1])
+	temp = 0 
 	if ring == 0.25:
 		temp = formalize(1.85*samplertt[-1])
 		samplertt.append(temp)
-		counter+=1
+		counter += 1
 	elif ring == 0.5:
 		temp = formalize(0.65*samplertt[-1])
 		samplertt.append(temp)
-		counter+=1
+		counter += 1
 	elif ring == 0.75:
 		temp2 = formalize(1.6*samplertt[-1])
 		samplertt.append(temp2)
-		counter+=1
+		counter += 1
 		if counter+1 <200:
 			temp3 = formalize(0.7*samplertt[-1])
 			samplertt.append(temp3)
@@ -39,7 +40,7 @@ def dostuff(samplertt,counter):
 	return samplertt,counter
 
 def roundtriptimes():
-	samplertt=[]
+	samplertt = []
 	samplertt.append(100) # this is the initial value
 	counter = 0
 	while counter<199:
@@ -71,10 +72,10 @@ def Devrtt(samplertt,estimatertt,b):
 	return devrtt
 
 def timeoutintervals(estimatertt,devrtt):
-	lst = []
+	timeoutintervals = []
 	for i in range(len(estimatertt)):
-		lst.append(estimatertt[i]+4*devrtt[i])
-	return lst
+		timeoutintervals.append(estimatertt[i]+4*devrtt[i])
+	return timeoutintervals
 	
 def retransmissions(timeoutintervals,samplertt):
 	retransmissions = {}
@@ -108,14 +109,14 @@ for i in listofsrtts:
 		estimation_dict[(a,b,iterator)] = EstimateRTT(i,a)
 		dev_dict[(a,b,iterator)] = Devrtt(i,estimation_dict[(a,b,iterator)],b)
 		timeout[(a,b,iterator)] = timeoutintervals(estimation_dict[(a,b,iterator)],dev_dict[(a,b,iterator)])
-		(retransmissions_dict[(a,b,iterator)],retrcounter[(a,b,iterator)]) = retransmissions(timeout[(a,b,iterator)],i)
+		retransmissions_dict[(a,b,iterator)],retrcounter[(a,b,iterator)] = retransmissions(timeout[(a,b,iterator)],i)
 	
 	iterator+=1 #indicates the number of the samplertt set
 
 for j in range(iterator):
 	f1.write("for the set %d \n"%j)
 	for a,b in concat:
-		print "for a = {0} and b = {1} we have {2} retransmissions".format(a,b,retrcounter[(a,b,j)])
+		print "for a,b ({0} , {1}) we have {2} retransmissions".format(a,b,retrcounter[(a,b,j)])
 		f1.write("for a,b = ({0},{1}) we have {2} retransmissions \n".format(a,b,retrcounter[(a,b,j)]))
 f1.close()
 f2 = open('set0_quadruples.csv','w')
