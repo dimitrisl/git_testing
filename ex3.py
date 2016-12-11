@@ -59,8 +59,8 @@ def roundtriptimes():
 def EstimateRTT(samplertt,a):
 	Estimatertt = []
 	Estimatertt.append(100)
-	for i in range(len(samplertt)):
-		temp = (1-a)*Estimatertt[i] + a*samplertt[i]
+	for i in range(len(samplertt)-1):
+		temp = (1-a)*Estimatertt[i] + a*samplertt[i+1]
 		Estimatertt.append(temp)
 	return Estimatertt
 
