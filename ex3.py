@@ -1,44 +1,46 @@
 from random import uniform as bell
+from random import choice as select
+def formalize(number):
+	if number <40:
+		number = 40
+	elif number >6000:
+		number = 6000
+	number = float("{0:.3f}".format(number))
+	return number
 
 def normalestimation(samplertt,counter):
-	x = float("{0:.3f}".format(bell(0.7,1.3)))
-	y = float("{0:.3f}".format(bell(-10,35)))
+	x = bell(0.7,1.3)
+	y = bell(-10,35)
 	estimate = x*samplertt[counter]*y
-	estimate = 40.0 if estimate<40 else estimate
-	estimate = 6000 if estimate>6000 else estimate
-	estimate = float("{0:.3f}".format(estimate))
+	estimate = formalize(estimate)
 	samplertt.append(estimate)
 	counter+=1
 	return samplertt,counter
 
 def dostuff(samplertt,counter):
-	ring = float("{0:.3f}".format(bell(0,1)))
-	if ring<=0.25:
-		temp = 40.0 if 1.85*samplertt[counter]<40 else 1.85*samplertt[counter]
-		temp = 6000 if temp>6000 else temp
-		temp = float("{0:.3f}".format(temp))
+	ring =select([0.25,0.5,0.75,1])
+	if ring == 0.25:
+		temp = 1.85*samplertt[counter]
+		temp = formalize(temp)
 		samplertt.append(temp)
 		counter+=1
-	elif ring <=0.5:
-		temp = 40.0 if 0.65*samplertt[counter]<40 else 0.65*samplertt[counter]
-		temp = 6000 if temp>6000 else temp
-		temp = float("{0:.3f}".format(temp))
+	elif ring == 0.5:
+		temp = 0.65*samplertt[counter]
+		temp = formalize(temp)
 		samplertt.append(temp)
 		counter+=1
-	elif ring<= 0.75:
-		temp2 = 40.0 if 1.6*samplertt[counter]<40 else 1.6*samplertt[counter]
-		temp2 = 6000 if temp2>6000 else temp2
-		temp2 = float("{0:.3f}".format(temp2))
+	elif ring == 0.75:
+		temp2 = 1.6*samplertt[counter]
+		temp2 = formalize(temp2)
 		samplertt.append(temp2)
 		counter+=1
 		if counter+1 <200:
-			temp3 = 40.0 if 0.7*samplertt[counter]<40 else 0.7*samplertt[counter]
-			temp3 = 6000 if temp3>6000 else temp3
-			temp3 = float("{0:.3f}".format(temp3))
+			temp3 = 0.7*samplertt[counter]
+			temp3 = formalize(temp3)
 			samplertt.append(temp3)
-			counter+=1
+			counter += 1
 	else:
-		(samplertt,counter) = normalestimation(samplertt,counter)
+		samplertt,counter = normalestimation(samplertt,counter)
 	return samplertt,counter
 
 def roundtriptimes():
@@ -53,7 +55,6 @@ def roundtriptimes():
 				(samplertt,counter) = dostuff(samplertt,counter)
 			else:
 				(samplertt,counter) = normalestimation(samplertt,counter)
-
 	return samplertt
 
 def EstimateRTT(samplertt,a):
@@ -61,6 +62,7 @@ def EstimateRTT(samplertt,a):
 	Estimatertt.append(100)
 	for i in range(len(samplertt)-1):
 		temp = (1-a)*Estimatertt[i] + a*samplertt[i+1]
+		temp = float("{0:.3f}".format(temp))
 		Estimatertt.append(temp)
 	return Estimatertt
 
@@ -69,6 +71,7 @@ def Devrtt(samplertt,estimatertt,b):
 	devrtt.append(100)
 	for i in range(len(samplertt)-1):
 		temp = (1-b)*devrtt[i] + b*abs(samplertt[i+1]-estimatertt[i])
+		temp = float("{0:.3f}".format(temp))
 		devrtt.append(temp)
 	return devrtt
 
@@ -87,7 +90,7 @@ def retransmissions(timeoutintervals,samplertt):
 		elif timeoutintervals[i-1] <= samplertt[i]:
 			retransmissions[i] = 0 #unsuccesfull
 			counter += 1 #counts the number of retransmissions
-	return retransmissions,counter 
+	return retransmissions,counter
 	
 listofsrtts=[] #calculate samplertts'
 for i in range(5):
@@ -97,11 +100,7 @@ for i in range(5):
 B = [(0.125,0.125),(0.125,0.25),(0.125,0.375)] #the tuples have the form (a,b)
 A = [(0.4,0.25),(0.25,0.25)] # same with this one
 concat = B+A
-#first calculate estimatertts
-#to calculate the final retransmissions it is critical to first
-#find the EstimateRTT -- > Devrtt --> timeoutintervals -->retransmissions
-#retransmissions is a dictionary that starts from the number 19 in order to 
-#make every data structure compatible.
+
 retransmissions_dict = {}
 retrcounter = {}
 dev_dict = {}
@@ -118,7 +117,6 @@ for i in listofsrtts:
 	
 	iterator+=1 #indicates the number of the samplertt set
 
-	
 for j in range(iterator):
 	f1.write("for the set %d \n"%j)
 	for a,b in concat:
