@@ -125,7 +125,7 @@ for j in range(iterator):
 		print "for a = {0} and b = {1} we have {2} retransmissions".format(a,b,retrcounter[(a,b,j)])
 		f1.write("for a = {0} and b = {1} we have {2} retransmissions \n".format(a,b,retrcounter[(a,b,j)]))
 f1.close()
-f2 = open('set0_quadruples.txt','w')
+f2 = open('set0_quadruples.csv','w')
 f2.write('n,timeoutinterval,samplertt,retransmission \n')
 for a,b in concat:
 	f2.write("\n a,b = ({0},{1}) \n".format(a,b))
