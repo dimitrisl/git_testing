@@ -147,3 +147,7 @@ for a,b in concat:
 print congvalues
 print success_tra
 print len(congvalues),len(congwindows)
+sum = 0
+for i in congvalues:
+	sum += i
+print sum
