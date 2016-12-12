@@ -25,7 +25,7 @@ def normalestimation(samplertt,counter):
 	counter += 1
 	return samplertt,counter
 
-def dostuff(samplertt,counter):
+def dostuff(samplertt,counter,congwin):
 	ring = select([0.25,0.5,0.75,1])
 	temp = 0 
 	if ring == 0.25:
@@ -44,9 +44,17 @@ def dostuff(samplertt,counter):
 			temp3 = formalize(0.7*samplertt[-1])
 			samplertt.append(temp3)
 			counter += 1
+			coin = bell(0,1)
+			probability = 0.6*(1-exp(-congwin/25.0))
+			if (coin - probability)<=0:
+				state = False
+				congwin = congevo(congwin,state) #here we have segment loss
+			else:
+				state = True
+				congwin = congevo(congwin,state) #here we pass it
 	else:
 		samplertt,counter = normalestimation(samplertt,counter)
-	return samplertt,counter
+	return samplertt,counter,congwin
 
 def roundtriptimes():
 	samplertt = []
@@ -59,11 +67,9 @@ def roundtriptimes():
 	while counter<199:
 
 		if counter>=9:
-			print counter
 			coin = bell(0,1)
 			probability = 0.6*(1-exp(-congwin/25.0))
 			if (coin - probability)<=0:
-
 				congwin = congevo(congwin,False) #here we have segment loss
 				congwindow.append(False)
 				congvalues.append(congwin)
@@ -76,7 +82,14 @@ def roundtriptimes():
 			samplertt,counter = normalestimation(samplertt,counter)
 		else:
 			if counter%5==0:
-				samplertt,counter = dostuff(samplertt,counter)
+				temp = congwin
+				samplertt,counter,congwin  = dostuff(samplertt,counter,congwin)
+				if congwin-temp ==5:
+					congvalues.append(congwindow)
+					congwindow.append(True)
+				elif congwin-temp != 5 and congwin - temp != 0:
+					congvalues.append(congwindow)
+					congwindow.append(False) 
 			else:
 				samplertt,counter = normalestimation(samplertt,counter)
 	
@@ -110,13 +123,13 @@ def retransmissions(timeoutintervals,samplertt,congwindow,congvalues):
 	retransmissions = {}
 	success = 0
 	for i in range(19,len(samplertt)):
-		if congwindow[i]:
+		if congwindow[i-10]:
 			if timeoutintervals[i-1] > samplertt[i]:
 				retransmissions[i] = 1 #succesfull
 				success += 1
 			elif timeoutintervals[i-1] <= samplertt[i]:
-				congwindow[i] = False
-				congvalues[i] = congevo(congvalues[i],congwindow[i])
+				congwindow[i-10] = False
+				congvalues[i-10] = congevo(congvalues[i-10],congwindow[i-10])
 				retransmissions[i] = 0 #unsuccesfull
 		else:
 			if timeoutintervals[i-1] > samplertt[i]:
@@ -125,12 +138,13 @@ def retransmissions(timeoutintervals,samplertt,congwindow,congvalues):
 	return retransmissions,success,congwindow,congvalues
 	
 srtt,congwindows,congvalues=roundtriptimes()
-#sucess_tra = 0
-#concat = [(0.125,0.25)]
-#for a,b in concat:
-#	estrtt = EstimateRTT(srtt,a)
-#	devrtt = Devrtt(srtt,estrtt,b)
-#	timeout = timeoutintervals(estrtt,devrtt)
-#	retr,success_tra,congwindows,congvalues = retransmissions(timeout,srtt,congwindows,congvalues)
+sucess_tra = 0
+concat = [(0.125,0.25)]
+print len(congvalues),len(congwindows)
+for a,b in concat:
+	estrtt = EstimateRTT(srtt,a)
+	devrtt = Devrtt(srtt,estrtt,b)
+	timeout = timeoutintervals(estrtt,devrtt)
+	retr,success_tra,congwindows,congvalues = retransmissions(timeout,srtt,congwindows,congvalues)
 
-print len(congwindows)
+print len(congvalues)
