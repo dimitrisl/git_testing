@@ -63,6 +63,7 @@ def roundtriptimes():
 	congwin = 10
 	congwindow = []
 	congvalues = []
+	congvalues.append(10)
 	while counter<199:
 		if counter>=9:
 			coin = bell(0,1)
@@ -70,12 +71,10 @@ def roundtriptimes():
 			if (coin - probability)<=0:
 				congwin = congevo(congwin,False) #here we have segment loss
 				congwindow.append(False)
-				congvalues.append(congwin)
 			else:
 				congwin = congevo(congwin,True) #here we pass it
 				congwindow.append(True)
-				congvalues.append(congwin)
-
+			congvalues.append(congwin)
 		if counter<19:
 			samplertt,counter = normalestimation(samplertt,counter)
 		else:
@@ -127,7 +126,7 @@ def retransmissions(timeoutintervals,samplertt,congwindow,congvalues):
 				success += 1
 			elif timeoutintervals[i-1] <= samplertt[i]:
 				congwindow[i-10] = False
-				congvalues[i-10] = congevo(congvalues[i-10],congwindow[i-10])
+				congvalues[i-9] = congevo(congvalues[i-9],congwindow[i-10])
 				retransmissions[i] = 0 #unsuccesfull
 		else:
 			if timeoutintervals[i-1] > samplertt[i]:
