@@ -65,7 +65,6 @@ def roundtriptimes():
 	congvalues = []
 	congvalues.append(congwin)
 	while counter<199:
-
 		if counter>=9:
 			coin = bell(0,1)
 			probability = 0.6*(1-exp(-congwin/25.0))
@@ -84,11 +83,11 @@ def roundtriptimes():
 			if counter%5==0:
 				temp = congwin
 				samplertt,counter,congwin  = dostuff(samplertt,counter,congwin)
-				if congwin-temp ==5:
-					congvalues.append(congwindow)
+				if congwin-temp == 5:
+					congvalues.append(congwin)
 					congwindow.append(True)
 				elif congwin-temp != 5 and congwin - temp != 0:
-					congvalues.append(congwindow)
+					congvalues.append(congwin)
 					congwindow.append(False) 
 			else:
 				samplertt,counter = normalestimation(samplertt,counter)
@@ -137,7 +136,7 @@ def retransmissions(timeoutintervals,samplertt,congwindow,congvalues):
 
 	return retransmissions,success,congwindow,congvalues
 	
-srtt,congwindows,congvalues=roundtriptimes()
+srtt,congwindows,congvalues = roundtriptimes()
 sucess_tra = 0
 concat = [(0.125,0.25)]
 print len(congvalues),len(congwindows)
@@ -147,4 +146,6 @@ for a,b in concat:
 	timeout = timeoutintervals(estrtt,devrtt)
 	retr,success_tra,congwindows,congvalues = retransmissions(timeout,srtt,congwindows,congvalues)
 
-print len(congvalues)
+print congvalues
+print success_tra
+print len(congvalues),len(congwindows)
