@@ -54,16 +54,23 @@ def roundtriptimes():
 	counter = 0
 	congwin = 10
 	congwindow = []
+	congvalues = []
+	congvalues.append(congwin)
 	while counter<199:
-		if counter>=10:
+
+		if counter>=9:
+			print counter
 			coin = bell(0,1)
 			probability = 0.6*(1-exp(-congwin/25.0))
 			if (coin - probability)<=0:
+
 				congwin = congevo(congwin,False) #here we have segment loss
 				congwindow.append(False)
+				congvalues.append(congwin)
 			else:
-				congwin = congevo(congwin,True)
+				congwin = congevo(congwin,True) #here we pass it
 				congwindow.append(True)
+				congvalues.append(congwin)
 
 		if counter<19:
 			samplertt,counter = normalestimation(samplertt,counter)
@@ -72,7 +79,8 @@ def roundtriptimes():
 				samplertt,counter = dostuff(samplertt,counter)
 			else:
 				samplertt,counter = normalestimation(samplertt,counter)
-	return samplertt,congwindow
+	
+	return samplertt,congwindow,congvalues
 
 def EstimateRTT(samplertt,a):
 	Estimatertt = []
@@ -98,21 +106,31 @@ def timeoutintervals(estimatertt,devrtt):
 		timeoutintervals.append(estimatertt[i]+4*devrtt[i])
 	return timeoutintervals
 	
-def retransmissions(timeoutintervals,samplertt,congwindow):
+def retransmissions(timeoutintervals,samplertt,congwindow,congvalues):
 	retransmissions = {}
-	counter = 0
+	success = 0
 	for i in range(19,len(samplertt)):
-		if (timeoutintervals[i-1] > samplertt[i]) and congwindow[i]:
-			retransmissions[i] = 1 #succesfull
-		elif timeoutintervals[i-1] <= samplertt[i]:
-			retransmissions[i] = 0 #unsuccesfull
-			counter += 1 #counts the number of retransmissions
-	return retransmissions,counter
-	
-srtt,congwindows=roundtriptimes()
+		if congwindow[i]:
+			if timeoutintervals[i-1] > samplertt[i]:
+				retransmissions[i] = 1 #succesfull
+				success += 1
+			elif timeoutintervals[i-1] <= samplertt[i]:
+				congwindow[i] = False
+				congvalues[i] = congevo(congvalues[i],congwindow[i])
+				retransmissions[i] = 0 #unsuccesfull
+		else:
+			if timeoutintervals[i-1] > samplertt[i]:
+				retransmissions[i] = 0
 
-concat = [(0.125,0.25)]
-for a,b in concat:
-	estrtt = EstimateRTT(srtt,a)
-	devrtt = Devrtt(srtt,estrttm,b)
-	timeout = timeoutintervals(estrtt,devrtt)
+	return retransmissions,success,congwindow,congvalues
+	
+srtt,congwindows,congvalues=roundtriptimes()
+#sucess_tra = 0
+#concat = [(0.125,0.25)]
+#for a,b in concat:
+#	estrtt = EstimateRTT(srtt,a)
+#	devrtt = Devrtt(srtt,estrtt,b)
+#	timeout = timeoutintervals(estrtt,devrtt)
+#	retr,success_tra,congwindows,congvalues = retransmissions(timeout,srtt,congwindows,congvalues)
+
+print len(congwindows)
