@@ -63,7 +63,6 @@ def roundtriptimes():
 	congwin = 10
 	congwindow = []
 	congvalues = []
-	congvalues.append(congwin)
 	while counter<199:
 		if counter>=9:
 			coin = bell(0,1)
