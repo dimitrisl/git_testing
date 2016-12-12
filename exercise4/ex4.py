@@ -148,6 +148,7 @@ print congvalues
 print success_tra
 print len(congvalues),len(congwindows)
 sum = 0
-for i in congvalues:
-	sum += i
+for i in range(len(congwindows)):
+	if congwindows[i] == True:
+		sum += congvalues[i]
 print sum
